@@ -4,14 +4,23 @@
 // Modify your source dir as needed.
 
 var ncp = require('ncp').ncp,
-    source = './app/assets',
-    destination = './platforms/ios/Phrase/Resources/icons';
+    transfers = [
+      {
+        'source': './app/assets/iOS/icons',
+        'destination': './platforms/ios/yourApp/Resources/icons'
+      },{
+        'source': './app/assets/iOS/splash',
+        'destination': './platforms/ios/yourApp/Resources/splash'
+      }
+    ];
 
 ncp.limit = 16;
 
-ncp(source, destination, function (err) {
-  if (err) {
-    return console.error(err);
-  }
-  console.log('====== Assets moved from ' + source + ' to ' + destination + ' ======');
+transfers.forEach(function(transfer) {
+  ncp(transfer.source, transfer.destination, function (err) {
+    if (err) {
+      return console.error(err);
+    }
+    console.log('====== Assets moved from ' + transfer.source + ' to ' + transfer.destination + ' ======');
+  });
 });
